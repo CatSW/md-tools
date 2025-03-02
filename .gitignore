@@ -6,3 +6,4 @@ bin/
 
 # File di Visual Studio
 .vs/
+mds-cache.txt

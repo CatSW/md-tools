@@ -53,13 +53,16 @@ Visual Studio Code should open the file `glossario.md` at the line corresponding
 
 Clone the project in your machine and then put the cloned folder in the system path.
 <br>
-In the mds.ps1 file, you need to customize these two paths:
+In the `md-tools.config` file, you need to customize these two paths:
 - rootMarkDownPath the root of your Mark Down folder hierarchy
 - defaultSearchPath the preferred "project" folder to use (for faster search for default mds search only from this path)
 
 ```ps
-$rootMarkDownPath  = "C:\Repo" 
-$defaultSearchPath = "C:\Repo\CatSW\"
+{
+  "rootMarkDownPath" : "C:\\Repo\\",
+  "defaultSearchPath" : "C:\\Repo\\CatSW\\",
+  "exclusionPattern": "\\\\packages\\\\|\\\\bin\\\\|\\\\obj\\\\|\\\\md-tools\\\\README\\.md"
+}
 ```
 
 Set `defaultSearchPath` to something like `C:\Repo\YourPersonalProjectsRoot\YourMdDefaultInfoFolder\`
