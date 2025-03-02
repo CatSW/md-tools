@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# Version 2.0.0.0 - Last Update 1/03/2025
+# Version 2.0.0.0 - Last Update 2/03/2025
 
 Push-Location
 
@@ -25,8 +25,7 @@ function BuildFolder()
 
   if (!(Test-Path -Path $path)) {
     try {
-        New-Item -ItemType Directory -Path $path | Out-Null
-        Set-Location $path
+        New-Item -ItemType Directory -Path $path -Force | Out-Null
         Write-Host "Folder '$path' created successfully."
     } catch {
         Write-Error "Failed to create folder '$path': $($_.Exception.Message)"
@@ -34,13 +33,20 @@ function BuildFolder()
   } else {
     Write-Host "Folder '$path' already exists."
   }
+  Set-Location $path
 }
 
 BuildFolder("C:\Repo")
-BuildFolder("C:\Repo\CatsSW")
+BuildFolder("C:\Repo\CatSW")
 
-# git clone xxxx
+$path = "C:\Repo\CatSW\md-tools"
+if (!(Test-Path -Path $path)) {
+	git clone https://github.com/CatSW/md-tools.git
+	Set-Location $path
+	explorer .
+}
 
 Write-Host "md Tools Build terminated."
 
 Pop-Location
+Pause
