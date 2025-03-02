@@ -1,5 +1,7 @@
 # README - md_tools by [IK0VCK](https://www.qrz.com/db/IK0VCK) @ ![CatSW](./Img/CatSW.png)
 
+[git clone](https://github.com/CatSW/md-tools.git)
+
 In this project, I created the following **PowerShell** scripts: 
 
 - **mds** Mark Down Search
