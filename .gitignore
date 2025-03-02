@@ -1,0 +1,8 @@
+# Build folder
+obj/
+
+# Eseguibili
+bin/
+
+# File di Visual Studio
+.vs/
