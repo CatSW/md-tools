@@ -12,14 +12,36 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Version 2.0.0.0 - Last Update 1/03/2025
+# Version 2.1.0.0 - Last Update 3/03/2025
+
+param (
+  [switch]$h
+)
+
+function PrintVer()
+{
+  Write-Host "mdgo Version 2.1 by IKOVCK" -ForegroundColor Cyan
+}
+
+function PrintSyntax()
+{
+  PrintVer
+  Write-Host "Mark Down GO - mdgo is part of md-tools by CatSW" -ForegroundColor Green
+  Write-Output "Sintax: mdgo <mds result line number>"
+  Write-Output "example: mdgo 0002"
+  exit
+}
+
+if ($h)
+{
+  PrintSyntax
+}
+
+if ($args.Count -eq 0) {
+  PrintSyntax
+}
 
 Write-Output "Mark Down GO..."
-if ($args.Count -eq 0) {
-  Write-Host "Sintax: mdgo <mds result line number>"
-  Write-Output "example: mdgo 0002"
-  return
-}
 
 $number = 0
 if (-not [int]::TryParse($args[0], [ref]$number)) {

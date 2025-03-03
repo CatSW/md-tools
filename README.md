@@ -1,6 +1,6 @@
-# README - md_tools by [IK0VCK](https://www.qrz.com/db/IK0VCK) @ ![CatSW](./Img/CatSW.png)
+# README - md-tools by [IK0VCK](https://www.qrz.com/db/IK0VCK) @ ![CatSW](./Img/CatSW.png)
 
-- Last Update: 02/03/2025
+- Last Update: 03/03/2025
 
 [git clone](https://github.com/CatSW/md-tools.git)
 
@@ -25,7 +25,7 @@ PowerShell has an execution policy that determines which scripts can be run. By 
 If, when trying to run mds, you receive an error that scripts are not enabled, then  
 Run PowerShell as Administrator:
 
-```ps
+```powershell
 Set-ExecutionPolicy RemoteSigned
 ```
 
@@ -40,7 +40,7 @@ Set-ExecutionPolicy RemoteSigned
 - try to execute `mds md`
 - if is all ok the previous command will found something like this:
 
-```ps
+```
 Mark Down Power Search ...
 0001 mds= Mark Down Search - A Power Shell tool by IK0VCK @ CatSW   §C:\Repo\CatSW\md-tools\demo\glossario.md:5
 0002 mdgo= Mark Down GO - A Power Shell tool by IK0VCK @ CatSW   §C:\Repo\CatSW\md-tools\demo\glossario.md:6
@@ -57,7 +57,7 @@ In the `md-tools.config` file, you need to customize these two paths:
 - rootMarkDownPath the root of your Mark Down folder hierarchy
 - defaultSearchPath the preferred "project" folder to use (for faster search for default mds search only from this path)
 
-```ps
+```json
 {
   "rootMarkDownPath" : "C:\\Repo\\",
   "defaultSearchPath" : "C:\\Repo\\CatSW\\",
@@ -73,7 +73,9 @@ open a Power Shell console and try `mds -h`
 
 if you have installed the scripts correctly, you should see something like this:
 
-```ps
+```
+mds Version 2.1 by IKOVCK
+Mark Down Search - mds is part of md-tools by CatSW
 Sintax 1: mds tag_to_search_in_default_path
 Sintax 2: mds search string with multiple words
 Sintax 3: mds tag_to_search -f filter ... -f filterN
@@ -99,8 +101,9 @@ Subdirectories will be included in all searches.
 
 open a Power Shell console and try `mdgo`
 
-```ps
-Mark Down GO...
+```
+mdgo Version 2.1 by IKOVCK
+Mark Down GO - mdgo is part of md-tools by CatSW
 Sintax: mdgo <mds result line number>
 example: mdgo 0002
 ```
@@ -112,11 +115,11 @@ If you have found some result with `mds` and then use `mdgo` with a right parame
 Only if you have installed the script using `mdToolsBuild`  
 then try:
 
-```ps
+```
 mds md
 ```
 
-```ps
+```
 Mark Down Power Search ...
 0001 markdown containing md word   §C:\Repo\CatSW\md-tools\demo\demo.md:3
 0002 and mds and mdgo togheter   §C:\Repo\CatSW\md-tools\demo\demo.md:7
@@ -127,11 +130,11 @@ Mark Down Power Search ...
 You should get 4 matches.  
 then try (smart use of tag):
 
-```ps
+```
 mds mdgo=
 ```
 
-```ps
+```
 Mark Down Power Search ...
 0001 mdgo= Mark Down GO - A Power Shell tool by IK0VCK @ CatSW   §C:\Repo\CatSW\md-tools\demo\glossario.md:6 
 ```
@@ -139,11 +142,11 @@ Mark Down Power Search ...
 You should get 1 matche.  
 then try with 2 optional filters in place:
 
-```ps
+```
 mds md -f go -f and
 ```
 
-```ps
+```
 Mark Down Power Search ...
 0001 and mds and mdgo togheter   §C:\Repo\CatSW\md-tools\demo\demo.md:7
 ```
