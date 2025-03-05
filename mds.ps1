@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# Version 2.1.0.0 - Last Update 3/03/2025
+# Version 2.1.1.0 - Last Update 5/03/2025
 
 param (
   [switch]$a,
@@ -21,7 +21,7 @@ param (
 
 function PrintVer()
 {
-  Write-Host "mds Version 2.1 by IKOVCK" -ForegroundColor Cyan
+  Write-Host "mds Version 2.1.1 by IKOVCK" -ForegroundColor Cyan
 }
 
 function PrintSyntax()
@@ -55,24 +55,26 @@ try {
   #read config
   $file = Join-Path -Path $PSScriptRoot -ChildPath "md-tools.config"
   $config = Get-Content -Path $file | ConvertFrom-Json
-  $exclusionPattern = $config.exclusionPattern 
+  $exclusionPattern = $config.exclusionPattern -replace '\\', '\\' -replace '\.', '\.'
+
   $rootMarkDownPath  = $config.rootMarkDownPath
   $defaultSearchPath = $config.defaultSearchPath
-
+  
   if ($a)
   {
     # search in all the repos
-    Set-Location $rootMarkDownPath
+    $SearchPath = $rootMarkDownPath
   } 
   elseif ($l)
   {
     # search from current shell path
+    $SearchPath = Get-Location
   } 
   else
   {
-    # default search from default path
-    Set-Location $defaultSearchPath
+    $SearchPath = $defaultSearchPath
   }
+  Set-Location $SearchPath
 
   $totalArgs = $args -join " "
   $tokenArgs = $totalArgs -split "-f"
@@ -84,20 +86,21 @@ try {
   {
     if (Test-Path $file) {
       try {
-          $lines = Get-Content $file
+          $lines = Get-Content $file -Encoding UTF8
 
           PrintVer
           Write-Host "use: mds -h to get the command sintax" -ForegroundColor Cyan
           Write-Host "Result read from cache of the last successfull query:" -ForegroundColor Cyan
 
-          for ($i = 0; $i -lt $lines.Count; $i++) {
-            $progressivo = "{0:D4}" -f ($i + 1)
+          Write-Host $lines[0] -ForegroundColor Green
+          for ($i = 1; $i -lt $lines.Count; $i++) {
+            $progressivo = "{0:D4}" -f ($i)
             if ($lines.Count -gt 1) {
               $line = $lines[$i]
             } else {
               $line = $lines
             }
-            $pos = $line.LastIndexOf('§')
+            $pos = $line.LastIndexOf('@')
             $PathLine = $line.Substring($pos)
             $line = $line.Substring(0, $pos)
             Write-Host "$progressivo $line " -NoNewline
@@ -113,7 +116,7 @@ try {
   }
 
   Clear-Host
-  Write-Output "Mark Down Power Search ..."
+  Write-Host "Mark Down Power Search ..." -ForegroundColor Green
   $search = Get-ChildItem -Recurse -Include *.md | Where-Object { $_.FullName -notmatch $exclusionPattern } | Select-String -Pattern "$searchPar"
 
   #apply -f filters 
@@ -157,11 +160,12 @@ try {
       $line = $matchesFound[$i].Line
       $PathLine = $matchesFound[$i].PathLine
       Write-Host "$progressivo $line " -NoNewline
-      Write-Host "§$PathLine" -ForegroundColor Cyan
+      Write-Host "@$PathLine" -ForegroundColor Cyan
     }
 
     try {
-      $matchesFound | ForEach-Object { "$($_.Line)   §$($_.PathLine)" } | Out-File -FilePath $file -Encoding UTF8
+      "{$($MyInvocation.Line)} Starting Search from: $SearchPath" | Out-File -FilePath $file -Encoding UTF8
+      $matchesFound | ForEach-Object { "$($_.Line)   @$($_.PathLine)" } | Out-File -FilePath $file -Encoding UTF8 -Append
     } catch {
         Write-Host "Error writing to file '$file': $($_.Exception.Message)"
     }

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Version 2.1.0.0 - Last Update 3/03/2025
+# Version 2.1.1.0 - Last Update 5/03/2025
 
 param (
   [switch]$h
@@ -20,7 +20,7 @@ param (
 
 function PrintVer()
 {
-  Write-Host "mdgo Version 2.1 by IKOVCK" -ForegroundColor Cyan
+  Write-Host "mdgo Version 2.1.1 by IKOVCK" -ForegroundColor Cyan
 }
 
 function PrintSyntax()
@@ -41,19 +41,20 @@ if ($args.Count -eq 0) {
   PrintSyntax
 }
 
-Write-Output "Mark Down GO..."
+Write-Host "Mark Down GO..." -ForegroundColor Green
 
 $number = 0
 if (-not [int]::TryParse($args[0], [ref]$number)) {
   Write-Host "Error: the parameter must be a number."
   exit
 }
+$number++ # skip header
 
 $file = Join-Path -Path $PSScriptRoot -ChildPath "mds-cache.txt"
 
 if (Test-Path $file) {
     try {
-        $lines = Get-Content $file
+        $lines = Get-Content $file -Encoding UTF8
         if ($number -ge 1 -and $number -le $lines.Count) {
           if ($lines.Count -eq 1) {
             $selection = $lines
@@ -73,15 +74,19 @@ if (Test-Path $file) {
     exit
 }
 
-$tokens = ($selection -split '§')
-if($tokens.count -gt 0)
+$pos = $selection.LastIndexOf('@')
+
+if($pos -gt 0)
 {
-  $searchString = $tokens[$tokens.count - 1]
+  $line = $selection.Substring(0, $pos).Trim()
+  $location = $selection.Substring($pos + 1)
 }
 else 
 {
-  Write-Output "??? Error: mds-cache.txt contain invalid text - missing § at the line specified"
+  Write-Output "??? Error: mds-cache.txt contain invalid text - missing @ at the line specified"
   exit
 }
 
-Invoke-Expression "code -g ""$searchString"""
+Write-Output "Goto [$line]"
+Write-Host "Opening location [$location] in VS Code.." -ForegroundColor Cyan
+Invoke-Expression "code -g ""$location"""
