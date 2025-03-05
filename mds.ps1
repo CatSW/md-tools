@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# Version 2.1.1.0 - Last Update 5/03/2025
+# Version 2.1.2.0 - Last Update 5/03/2025
 
 param (
   [switch]$a,
@@ -21,7 +21,7 @@ param (
 
 function PrintVer()
 {
-  Write-Host "mds Version 2.1.1 by IKOVCK" -ForegroundColor Cyan
+  Write-Host "mds Version 2.1.2 by IKOVCK" -ForegroundColor Cyan
 }
 
 function PrintSyntax()
@@ -155,6 +155,7 @@ try {
   }
   else 
   {
+	Write-Host "{$($MyInvocation.Line)} Starting Search from: $SearchPath" -ForegroundColor Green
     for ($i = 0; $i -lt $matchesFound.Count; $i++) {
       $progressivo = "{0:D4}" -f ($i + 1)
       $line = $matchesFound[$i].Line
