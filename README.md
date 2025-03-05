@@ -61,7 +61,7 @@ In the `md-tools.config` file, you need to customize these two paths:
 {
   "rootMarkDownPath" : "C:\\Repo\\",
   "defaultSearchPath" : "C:\\Repo\\CatSW\\",
-  "exclusionPattern": "\\\\packages\\\\|\\\\bin\\\\|\\\\obj\\\\|\\\\md-tools\\\\README\\.md"
+  "exclusionPattern": "\\packages\\|\\bin\\|\\obj\\|\\md-tools\\README.md"
 }
 ```
 
@@ -74,7 +74,7 @@ open a Power Shell console and try `mds -h`
 if you have installed the scripts correctly, you should see something like this:
 
 ```
-mds Version 2.1 by IKOVCK
+mds Version 2.1.2 by IKOVCK
 Mark Down Search - mds is part of md-tools by CatSW
 Sintax 1: mds tag_to_search_in_default_path
 Sintax 2: mds search string with multiple words
@@ -102,7 +102,7 @@ Subdirectories will be included in all searches.
 open a Power Shell console and try `mdgo`
 
 ```
-mdgo Version 2.1 by IKOVCK
+mdgo Version 2.1.1 by IKOVCK
 Mark Down GO - mdgo is part of md-tools by CatSW
 Sintax: mdgo <mds result line number>
 example: mdgo 0002
@@ -121,10 +121,11 @@ mds md
 
 ```
 Mark Down Power Search ...
-0001 markdown containing md word   §C:\Repo\CatSW\md-tools\demo\demo.md:3
-0002 and mds and mdgo togheter   §C:\Repo\CatSW\md-tools\demo\demo.md:7
-0003 mds= Mark Down Search - A Power Shell tool by IK0VCK @ CatSW   §C:\Repo\CatSW\md-tools\demo\glossario.md:5
-0004 mdgo= Mark Down GO - A Power Shell tool by IK0VCK @ CatSW   §C:\Repo\CatSW\md-tools\demo\glossario.md:6
+{mds md} Starting Search from: C:\Repo\CatSW\
+0001 markdown containing md word @C:\Repo\CatSW\md-tools\demo\demo.md:3
+0002 and mds and mdgo togheter @C:\Repo\CatSW\md-tools\demo\demo.md:7
+0003 - mds= Mark Down Search - A Power Shell tool by IK0VCK @ CatSW @C:\Repo\CatSW\md-tools\demo\glossario.md:5
+0004 - mdgo= Mark Down GO - A Power Shell tool by IK0VCK @ CatSW @C:\Repo\CatSW\md-tools\demo\glossario.md:6
 ```
 
 You should get 4 matches.  
@@ -136,10 +137,11 @@ mds mdgo=
 
 ```
 Mark Down Power Search ...
-0001 mdgo= Mark Down GO - A Power Shell tool by IK0VCK @ CatSW   §C:\Repo\CatSW\md-tools\demo\glossario.md:6 
+{mds mdgo=} Starting Search from: C:\Repo\CatSW\
+0001 - mdgo= Mark Down GO - A Power Shell tool by IK0VCK @ CatSW @C:\Repo\CatSW\md-tools\demo\glossario.md:6
 ```
 
-You should get 1 matche.  
+You should get 1 match.  
 then try with 2 optional filters in place:
 
 ```
@@ -148,6 +150,7 @@ mds md -f go -f and
 
 ```
 Mark Down Power Search ...
-0001 and mds and mdgo togheter   §C:\Repo\CatSW\md-tools\demo\demo.md:7
+{mds md -f go -f and} Starting Search from: C:\Repo\CatSW\
+0001 and mds and mdgo togheter @C:\Repo\CatSW\md-tools\demo\demo.md:7
 ```
-You should get 1 matche.  
+You should get 1 match.  
