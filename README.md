@@ -1,6 +1,6 @@
 # README - md-tools by [IK0VCK](https://www.qrz.com/db/IK0VCK) @ ![CatSW](./Img/CatSW.png)
 
-- Last Update: 03/03/2025
+- Last Update: 06/03/2025
 
 [git clone](https://github.com/CatSW/md-tools.git)
 
@@ -42,11 +42,14 @@ Set-ExecutionPolicy RemoteSigned
 
 ```
 Mark Down Power Search ...
-0001 mds= Mark Down Search - A Power Shell tool by IK0VCK @ CatSW   §C:\Repo\CatSW\md-tools\demo\glossario.md:5
-0002 mdgo= Mark Down GO - A Power Shell tool by IK0VCK @ CatSW   §C:\Repo\CatSW\md-tools\demo\glossario.md:6
+{mds md} Starting Search from: C:\Repo\CatSW\
+0001 markdown containing md word @C:\Repo\CatSW\md-tools\demo\demo.md:3
+0002 and mds and mdgo togheter @C:\Repo\CatSW\md-tools\demo\demo.md:7
+0003 - mds= Mark Down Search - A Power Shell tool by IK0VCK @ CatSW @C:\Repo\CatSW\md-tools\demo\glossario.md:5
+0004 - mdgo= Mark Down GO - A Power Shell tool by IK0VCK @ CatSW @C:\Repo\CatSW\md-tools\demo\glossario.md:6
 ```
 
-In the case the installation is ok and you can try to execute `mdgo 2`
+In the case the installation is ok and you can try to execute `mdgo 4`
 Visual Studio Code should open the file `glossario.md` at the line corresponding to the match indicated by the parameter.
 
 ## Configuration
@@ -74,7 +77,7 @@ open a Power Shell console and try `mds -h`
 if you have installed the scripts correctly, you should see something like this:
 
 ```
-mds Version 2.1.2 by IKOVCK
+mds Version 2.2 by IKOVCK
 Mark Down Search - mds is part of md-tools by CatSW
 Sintax 1: mds tag_to_search_in_default_path
 Sintax 2: mds search string with multiple words
@@ -87,8 +90,11 @@ example 3: mds md -f go -f and
 example 4: mds -a tagInSomeRepo
 example 5: mds -l TagInCurrentFolder
 
+If you want to filter something in the part after the @, use | sls filter in cascade.
+exemple: mds md | sls demo
+
 after found some result with mds, you can use the mdgo command to open Visual Studio Code on the line of the match.
-exemple: mdgo 0002
+exemple: mdgo 2
 ```
 
 For default, the search start form `defaultSearchPath`  
@@ -112,23 +118,22 @@ If you have found some result with `mds` and then use `mdgo` with a right parame
 
 ## Test
 
-Only if you have installed the script using `mdToolsBuild`  
+Only if you have installed the script using `mdToolsBuild`, that come with a couple of md example files, used in the following command.
+(Note: the output in the following exemples, are in the case you have not added new files) 
 then try:
 
 ```
-mds md
+mds mds
 ```
 
 ```
 Mark Down Power Search ...
-{mds md} Starting Search from: C:\Repo\CatSW\
-0001 markdown containing md word @C:\Repo\CatSW\md-tools\demo\demo.md:3
-0002 and mds and mdgo togheter @C:\Repo\CatSW\md-tools\demo\demo.md:7
-0003 - mds= Mark Down Search - A Power Shell tool by IK0VCK @ CatSW @C:\Repo\CatSW\md-tools\demo\glossario.md:5
-0004 - mdgo= Mark Down GO - A Power Shell tool by IK0VCK @ CatSW @C:\Repo\CatSW\md-tools\demo\glossario.md:6
+{mds mds} Starting Search from: C:\Repo\CatSW\
+0001 and mds and mdgo togheter @C:\Repo\CatSW\md-tools\demo\demo.md:7
+0002 - mds= Mark Down Search - A Power Shell tool by IK0VCK @ CatSW @C:\Repo\CatSW\md-tools\demo\glossario.md:5
 ```
 
-You should get 4 matches.  
+You should get 2 matches.  
 then try (smart use of tag):
 
 ```

@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# Version 2.1.2.0 - Last Update 5/03/2025
+# Version 2.2.0.0 - Last Update 6/03/2025
 
 param (
   [switch]$a,
@@ -21,7 +21,7 @@ param (
 
 function PrintVer()
 {
-  Write-Host "mds Version 2.1.2 by IKOVCK" -ForegroundColor Cyan
+  Write-Host "mds Version 2.2 by IKOVCK" -ForegroundColor Cyan
 }
 
 function PrintSyntax()
@@ -39,8 +39,11 @@ function PrintSyntax()
   Write-Output "example 4: mds -a tagInSomeRepo"
   Write-Output "example 5: mds -l TagInCurrentFolder"
   Write-Output ""
+  Write-Output "If you want to filter something in the part after the @, use | sls filter in cascade."
+  Write-Output "exemple: mds md | sls demo"
+  Write-Output ""
   Write-Output "after found some result with mds, you can use the mdgo command to open Visual Studio Code on the line of the match."
-  Write-Output "exemple: mdgo 0002"
+  Write-Output "exemple: mdgo 2"
   exit
 }
 
@@ -79,6 +82,10 @@ try {
   $totalArgs = $args -join " "
   $tokenArgs = $totalArgs -split "-f"
   $searchPar = $tokenArgs[0].Trim()
+  
+  $inArgsCount = (Select-String -InputObject $totalArgs -Pattern '\|' -AllMatches).Matches.Count
+  $inLineCount = (Select-String -InputObject $MyInvocation.Line -Pattern '\|' -AllMatches).Matches.Count
+  $flagPipeline = $inLineCount -gt $inArgsCount
 
   $file = Join-Path -Path $PSScriptRoot -ChildPath "mds-cache.txt"
 
@@ -151,7 +158,7 @@ try {
   } 
 
   if($null -eq $search) {
-    Write-Output "No match."
+    Write-Host "No match." -ForegroundColor Yellow
   }
   else 
   {
@@ -160,8 +167,14 @@ try {
       $progressivo = "{0:D4}" -f ($i + 1)
       $line = $matchesFound[$i].Line
       $PathLine = $matchesFound[$i].PathLine
-      Write-Host "$progressivo $line " -NoNewline
-      Write-Host "@$PathLine" -ForegroundColor Cyan
+	  if ($flagPipeline) {
+	    Write-Output  "$progressivo $line @$PathLine"
+	  }
+	  else 
+	  {
+		Write-Host "$progressivo $line " -NoNewline
+        Write-Host "@$PathLine" -ForegroundColor Cyan
+	  }
     }
 
     try {
